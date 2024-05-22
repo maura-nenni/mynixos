@@ -1,0 +1,48 @@
+#!/usr/bin/bash
+TEMP=/tmp/current_wall
+
+files=(~/.dotfiles/themes/wallpapers/*)
+
+scripts=~/.dotfiles/config/home/desktop/scripts
+
+cooldown=0.1
+
+
+while true
+do
+    case "$1" in
+        "cycle")
+            index=$(cat $TEMP)
+            index=$((index+1))
+            if [ $index -ge ${#files[@]} ]; then
+                index=0
+            fi
+            echo $index > $TEMP
+            bash $scripts/wall "${files[$index]}"
+            exit 0
+            ;;
+        "arrow-icon")
+            if bash $scripts/toolbar_state; then
+                echo ""
+            else
+                echo ""
+            fi
+            ;;
+        "ss-icon")
+            if bash $scripts/toolbar_state; then
+                echo ""
+            else
+                echo ""
+            fi
+            ;;
+            
+        *)
+            if bash $scripts/toolbar_state; then
+                echo "     "
+            else
+                echo ""
+            fi
+            ;;
+    esac
+    sleep $cooldown
+done

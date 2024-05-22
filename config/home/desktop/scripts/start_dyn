@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+python $HOME/.dotfiles/config/home/desktop/scripts/dynamic &
+
+while true
+do
+    out=$(cat ~/.dotfiles/config/home/desktop/store/dynamic_out.txt)
+    echo "$out"  | jq --unbuffered --compact-output
+    sleep 0.5
+done

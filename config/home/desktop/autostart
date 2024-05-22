@@ -1,0 +1,27 @@
+#!/usr/bin/bash
+
+
+echo "Autostart Hyprland"
+
+# variables
+scripts=$HOME/.dotfiles/config/home/desktop/scripts
+
+# polkit
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+# notification daemon
+dunst &
+
+# waybar
+waybar
+$scripts/dynamic &
+
+# wallpaper
+bash $scripts/wall $HOME/.dotfiles/themes/wallpapers/4.jpg &
+
+# effects
+# $scripts/rgb &
+
+# other
+# dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &
+# notify-send -a aurora "hello $(whoami)" &
