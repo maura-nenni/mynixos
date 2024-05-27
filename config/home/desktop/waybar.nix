@@ -13,8 +13,8 @@
     		margin-bottom = -11;
     
 			# Choose the order of the modules
-			modules-left =  ["wlr/workspaces"];
-    		modules-right =  [ "battery" "custom/ss" "custom/cycle_wall" "custom/expand" "temperature" "network" "pulseaudio" "clock" ];
+			modules-left =  ["hyprland/workspaces"];
+    		modules-right =  [ "battery" "temperature" "network" "bluetooth" "pulseaudio" "clock" "custom/exit" ];
     		modules-center =  ["custom/dynamic_pill"];
     
 
@@ -44,6 +44,13 @@
 				format = "{}";
 				exec = "bash ~/.dotfiles/config/home/desktop/scripts/expand arrow-icon";
 			};
+
+			"custom/exit" = {
+				tooltip = false;
+		        format = "";
+          		on-click = "sleep 0.1 && wlogout";
+    		};
+
 			
 			"keyboard-state" = {
 				numlock = true;
@@ -55,7 +62,7 @@
 				};
 			};
 
-			"wlr/workspaces" = {
+			"hyprland/workspaces" = {
 				format = "{icon}";
 				format-active = " {icon} ";
 				on-click = "activate";
@@ -127,6 +134,13 @@
 				format = "";
 			};
 
+			"bluetooth" = {
+				tooltip = false;
+				format = "";
+				format-off = "󰂲";
+				on-click = "blueman-manager";
+			};
+
 			"backlight" = {
 				format = "{percent}% {icon}";
 				format-icons = [""  ""  ""  ""  ""  ""  ""  ""  ""];
@@ -134,13 +148,27 @@
 
 			"battery" = {
 				states = {
-					warning = 50;
-					critical = 20;
+					warning = 30;
+					critical = 15;
 				};
 				format = "{icon}";
-				format-charging = "";
-				format-plugged = "";
-				format-icons = [""  ""  ""  ""  ""];
+				format-charging = "󰂄";
+				format-plugged = "󱘖";
+				format-icons = [
+					"󰁺"
+					"󰁻"
+					"󰁼"
+					"󰁽"
+					"󰁾"
+					"󰁿"
+					"󰂀"
+					"󰂁"
+					"󰂂"
+					"󰁹"
+			  	];
+				on-click = "";
+				tooltip = true;
+				tooltip-format = "{capacity}%";
 			};
 
 			"battery#bat2" = {
@@ -148,32 +176,44 @@
 			};
 
 			"network" = {
-				# "interface": "wlp2*", # (Optional) To force the use of this interface
-				format-wifi = "";
-				format-ethernet = "";
-				tooltip-format = "via {gwaddr} {ifname}";
-				format-linked = "";
-				format-disconnected = "wifi";
-				format-alt = "   ";
-			};
+        		format-icons = [
+        			"󰤯"
+		            "󰤟"
+        		    "󰤢"
+		            "󰤥"
+		            "󰤨"
+        		];
+	        	format-ethernet = " {bandwidthDownOctets}";
+        		format-wifi = "{icon} {signalStrength}%";
+        		format-disconnected = "󰤮";
+        		tooltip = false;
+				on-click = "kitty --hold nmtui";
+    		};
+	
 
 			"pulseaudio" = {
-				scroll-step = 1; # %, can be a float
-				format = "{format_source}";
-				format-bluetooth = "{volume}% {icon} {format_source}";
-				format-bluetooth-muted = " {icon} {format_source}";
-				format-muted = " {format_source}";
-				format-icons = {
-					headphone = "";
-					hands-free = "";
-					headset = "";
-					phone = "";
-					portable = "";
-					car = "";
-					default = [""  ""  ""];
-				};
-				on-click = "pavucontrol";
-			};
+	        	format = "{icon} {volume}% {format_source}";
+        		format-bluetooth = "{volume}% {icon} {format_source}";
+        		format-bluetooth-muted = " {icon} {format_source}";
+        		format-muted = " {format_source}";
+        		format-source = " {volume}%";
+        		format-source-muted = "";
+        		format-icons = {
+        			headphone = "";
+        			hands-free = "";
+        			headset = "";
+        			phone = "";
+        			portable = "";
+        			car = "";
+        			default = [
+            			""
+            			""
+            			""
+        			];
+        		};
+        		on-click = "sleep 0.1 && pavucontrol";
+    		};
+	
 
 			"custom/media" = {
 				format = "{icon} {}";
@@ -202,6 +242,7 @@
 			#disk,
 			#temperature,
 			#backlight,
+			#bluetooth,
 			#network,
 			#pulseaudio,
 			#custom-media,
@@ -212,6 +253,7 @@
 			#custom-cycle_wall,
 			#custom-ss,
 			#custom-dynamic_pill,
+			#custom-exit,
 			#mpd {
 				padding: 0 10px;
 				border-radius: 15px;
@@ -462,8 +504,13 @@
 				color:#000;
 			}
 
+			#bluetooth{
+				background-color:#90b1b1;
+				color: #fff;
+			}
+
 			#network.disabled{
-				background-color: #45475a;
+				background-color: #90b1b1;
 			}
 
 			#network.disconnected{
@@ -527,6 +574,13 @@
 				-gtk-icon-effect: highlight;
 				background-color: #eb4d4b;
 			}
+
+			#custom-exit {
+          		background-color: #eb4d4b;
+          		color: #fff;
+				padding-right: 10px;
+        	}
+
 		''];
 	};
 }

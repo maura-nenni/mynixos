@@ -24,6 +24,11 @@
             url = "github:nix-community/nixvim";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+		hycov={
+      		url = "github:DreamMaoMao/hycov";
+		    inputs.hyprland.follows = "hyprland";
+    	};
 	};
 
 

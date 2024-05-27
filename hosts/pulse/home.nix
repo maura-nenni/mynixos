@@ -38,6 +38,8 @@ in
 		# bureautique
 		libreoffice-fresh
 		obsidian
+		nomacs
+		zathura
 
 		# music
 		pavucontrol
@@ -63,6 +65,9 @@ in
 
 		#social
 		discord
+
+		# theme
+		tokyonight-gtk-theme
 		
 		# C/C++
 		gcc

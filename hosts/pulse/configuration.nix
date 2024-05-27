@@ -89,8 +89,14 @@ in{
 	# wpa_supplicant
 	nodejs
 	cargo
+	ninja
+	meson
 	
 	polkit_gnome
+
+	# font pour dunst
+	papirus-icon-theme
+	gnome.adwaita-icon-theme
 	];
 
 	# shell lang

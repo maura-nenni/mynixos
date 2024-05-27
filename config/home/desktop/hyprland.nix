@@ -5,14 +5,20 @@
 		./waybar.nix
 		./wofi.nix
 		./dunst.nix
+		./wlogout.nix
+		./hyprlock.nix
 	];
 
 	home.packages = with pkgs; [
 		wl-clipboard
+		wl-clip-persist
+		clipman
+		networkmanagerapplet
 		gnome.nautilus
 		socat
 		waybar-mpris
 		swww
+		libcanberra-gtk3
 		];
 
     wayland.windowManager.hyprland = {
@@ -25,6 +31,7 @@
 
         plugins = [
             #inputs.hyprland-plugins.packages."${pkgs.system}".borders-plus-plus
+			#inputs.hycov.packages."${pkgs.system}".hycov
         ];
 
         settings = {
@@ -47,6 +54,8 @@
 
 				follow_mouse = 1;
 
+				numlock_by_default = true;
+
 				touchpad = {
 					natural_scroll = "yes";
 				};
@@ -57,12 +66,24 @@
 			 	"HDMI-A-1,preferred,auto-left,1"
 			];
 
+
 			env = [
+				"GDK_BACKEND,wayland,x11,*"
+				"QT_QPA_PLATFORM,wayland;xcb"
+				"SDL_VIDEODRIVER,wayland"
+				"CLUTTER_BACKEND,wayland"
+				"NIXOS_OZONE_WL, 1"
+
+				"QT_AUTO_SCREEN_SCALE_FACTOR,1"
+				"QT_QPA_PLATFORM,wayland;xcb"
+				"QT_WAYLAND_DISABLE_WINDODECORATION,1"
+				"QT_QPA_PLATFORMTHEME,qt5ct"
+
 				"XDG_CURRENT_DESKTOP, Hyprland"
 				"XDG_SESSION_DESKTOP, Hyprland"
 				"XDG_SESSION_TYPE, wayland"
 
-				"GTK_THEME, Tokyonight-Dark"
+				"export GTK_THEME=Tokyonight-Dark"
 			];
 
 			decoration = {
@@ -108,7 +129,7 @@
 				"$HOME/.dotfiles/config/home/desktop/scripts/dynamic &"
 
 				# wallpaper
-				"bash $HOME/.dotfiles/config/home/desktop/scripts/wall $HOME/.dotfiles/themes/wallpapers/4.jpg &"
+				"bash $HOME/.dotfiles/config/home/desktop/scripts/wall $HOME/.dotfiles/themes/wallpapers/bushes.jpg &"
 
 				# others
 				"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &"
@@ -122,8 +143,13 @@
 				# move workspace to monitor
 				"bash $HOME/.dotfiles/config/home/desktop/handle_monitor_connect.sh"
 
+				# bluetooth and network
+				"nm-applet --indicator & disown"
+				"blueman-applet"
+
 				# clipboard manager
-				"copyq --start-server"
+				# "wl-paste -p -t text --watch clipman store -P --histpath=~/.local/share/clipman-primary.json"
+				"wl-paste -t text --watch clipman store --no-persist"
 			];
 
 			windowrule = [
@@ -136,6 +162,15 @@
 				"float,title:^(clock_is_kitty)$"
 				"size 418 234,title:^(clock_is_kitty)$"
 			];
+
+			plugin = {
+				#hycov = {
+				#	overview_gappo = 60; #gaps width from screen
+                #    overview_gappi = 24; #gaps width from clients
+                #	hotarea_size = 10; #hotarea size in bottom left,10x10
+                #	enable_hotarea = 1; # enable mouse cursor hotarea
+                #};
+			};
 
 			bindm = [
 				"SUPER,mouse:272,movewindow"
@@ -153,7 +188,14 @@
 				"SUPER,S,togglefloating,"
 				"SUPER,space,exec,wofi --show drun -o DP-3"
 				"SUPER,P,pseudo,"
-				"SUPER, F, fullscreen,"
+				"SUPER, F, fullscreen, 0"
+				"SUPER, Z, fullscreen, 1"
+				
+				#"ALT, tab, hycov:toggleoverview"
+				#"ALT, left, hycov:movefocus, l"
+				#"ALT, right, hycov:movefocus, r"
+				#"ALT, up, hycov:movefocus, u"
+				#"ALT, down, hycov:movefocus, d"
 
 				"SUPER,L,exec,~/.dotfiles/config/home/desktop/scripts/lock"
 
@@ -177,7 +219,7 @@
 				"ALT,eacute,movetoworkspace,2"
 				"ALT,quotedbl,movetoworkspace,3"
 				"ALT,apostrophe,movetoworkspace,4"
-				"ALT,parentleft,movetoworkspace,5"
+				"ALT,parenleft,movetoworkspace,5"
 				"ALT,minus,movetoworkspace,6"
 				"ALT,egrave,movetoworkspace,7"
 				"ALT,underscore,movetoworkspace,8"
@@ -190,7 +232,10 @@
 				"SUPER,g,togglegroup"
 				"SUPER,tab,changegroupactive"
 
-				", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+				# ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+				", XF86AudioMute, exec, bash $ĤOME/.dotfiles/config/home/desktop/scripts/volume.sh mute"
+
+				"SUPER, V, exec, clipman pick -t wofi"
 
 				"CTRL,ampersand,exec,kitty --title fly_is_kitty --hold cava"
 				"CTRL,eacute,exec,code-insiders"
@@ -199,8 +244,11 @@
 			];
 
 			binde = [
-				", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
-				", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
+				", XF86AudioRaiseVolume, exec, bash $HOME/.dotfiles/config/home/desktop/scripts/volume.sh up"
+				", XF86AudioLowerVolume, exec, bash $HOME/.dotfiles/config/home/desktop/scripts/volume.sh down"
+
+				# ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
+				# ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
 				", XF86MonBrightnessDown, exec, brightnessctl set 5%- "
 				", XF86MonBrightnessUp, exec, brightnessctl set 5%+ "
 			];
