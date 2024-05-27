@@ -29,6 +29,16 @@
       		url = "github:DreamMaoMao/hycov";
 		    inputs.hyprland.follows = "hyprland";
     	};
+
+		caligula = {
+			url = "github:ifd3f/caligula";
+			inputs.nixpkgs.follows = "caligula";
+		};
+		erosanix = {
+			url = "github:emmanuelrosa/erosanix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 	};
 
 
@@ -77,6 +87,8 @@
 		                #	hardware.tuxedo-control-center.enable = true;
 		                    hardware.tuxedo-keyboard.enable = true;
 		                }
+
+						inputs.erosanix.nixosModules.protonvpn
 					];
 					specialArgs = {
 						inherit pkgs;

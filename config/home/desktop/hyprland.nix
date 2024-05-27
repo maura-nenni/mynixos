@@ -68,16 +68,16 @@
 
 
 			env = [
-				"GDK_BACKEND,wayland,x11,*"
-				"QT_QPA_PLATFORM,wayland;xcb"
-				"SDL_VIDEODRIVER,wayland"
-				"CLUTTER_BACKEND,wayland"
-				"NIXOS_OZONE_WL, 1"
+				#"GDK_BACKEND,wayland,x11,*"
+				#"QT_QPA_PLATFORM,wayland;xcb"
+				#"SDL_VIDEODRIVER,wayland"
+				#"CLUTTER_BACKEND,wayland"
+				#"NIXOS_OZONE_WL, 1"
 
-				"QT_AUTO_SCREEN_SCALE_FACTOR,1"
-				"QT_QPA_PLATFORM,wayland;xcb"
-				"QT_WAYLAND_DISABLE_WINDODECORATION,1"
-				"QT_QPA_PLATFORMTHEME,qt5ct"
+				#"QT_AUTO_SCREEN_SCALE_FACTOR,1"
+				#"QT_QPA_PLATFORM,wayland;xcb"
+				#"QT_WAYLAND_DISABLE_WINDODECORATION,1"
+				#"QT_QPA_PLATFORMTHEME,qt5ct"
 
 				"XDG_CURRENT_DESKTOP, Hyprland"
 				"XDG_SESSION_DESKTOP, Hyprland"

@@ -10,8 +10,8 @@ in
 		
         ../../config/home/cli
         ../../config/home/nvim/nixvim.nix
-	../../config/home/kitty.nix
-	../../config/home/vscodium.nix
+		../../config/home/kitty.nix
+		../../config/home/vscodium.nix
 		
         ../../config/home/desktop/hyprland.nix
   	];
@@ -101,6 +101,15 @@ in
 		hwinfo
 		tree
 		htop
+
+		# system
+		unetbootin
+		arp-scan
+		qbittorrent
+		protonvpn-gui
+		libnatpmp
+		lsof
+		netstat
   	];
 
 	news.display = "silent";

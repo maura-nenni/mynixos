@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 let
 
     timezone = "Europe/Paris";
@@ -25,6 +25,7 @@ in{
 		../../config/system/hyprland.nix
 		../../config/system/portal.nix
 		../../config/system/polkit.nix
+		../../config/system/firewall.nix
 		
 	];
     
@@ -91,6 +92,7 @@ in{
 	cargo
 	ninja
 	meson
+	caligula
 	
 	polkit_gnome
 
