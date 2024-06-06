@@ -1,1 +1,1 @@
-{"class": "none", "text": ""}
+{"class": "playing", "text": "Stacks - Love and Language - Above Ground (03:46/03:47) ", "tooltip": "Above Ground\nby Stacks\nfrom Love and Language\n(spotify)"}

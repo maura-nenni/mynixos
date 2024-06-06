@@ -65,6 +65,7 @@ in
 
 		#social
 		discord
+		zoom-us
 
 		# theme
 		tokyonight-gtk-theme
@@ -109,7 +110,6 @@ in
 		protonvpn-gui
 		libnatpmp
 		lsof
-		netstat
   	];
 
 	news.display = "silent";
